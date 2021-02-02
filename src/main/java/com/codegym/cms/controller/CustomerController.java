@@ -16,7 +16,7 @@ public class CustomerController {
 
     //region Retrieve all customers
 
-    @RequestMapping(value = "/customers", method = RequestMethod.GET)
+    @RequestMapping(value = "/customers/", method = RequestMethod.GET)
     public ResponseEntity<List<Customer>> listAllCustomers() {
 
         List<Customer> customers = customerService.findAll();
@@ -49,7 +49,9 @@ public class CustomerController {
 
     //region Update customer
 
-    @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id,
                                                    @RequestBody Customer customer) {
         System.out.println("Updating Customer:" + id);
@@ -89,9 +91,10 @@ public class CustomerController {
     //endregion
 
     //region Create customer
+
     @RequestMapping(value = "/customers/",
             method = RequestMethod.POST,
-            consumes =  MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
         System.out.println("Create customer: " + customer.getLastName());
@@ -101,4 +104,6 @@ public class CustomerController {
 
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+    //endregion
 }
